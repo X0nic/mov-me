@@ -9,6 +9,9 @@
 /test/tmp/
 /test/version_tmp/
 /tmp/
+/config.yml
+.ruby-gemset
+.ruby-version
 
 # Used by dotenv library to load environment variables.
 # .env
