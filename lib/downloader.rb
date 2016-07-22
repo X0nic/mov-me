@@ -6,10 +6,10 @@ class Downloader
     @settings = settings
   end
 
-  def run(message)
+  def run(mov_url)
     Thread.new do
-      CommandRunner.new.exec "sleep 10"
-      Message.new(@settings).send(message)
+      CommandRunner.new.exec "youtube-dl #{mov_url}"
+      Message.new(@settings).send("Downloaded #{mov_url}")
     end
   end
 end
