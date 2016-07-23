@@ -5,7 +5,7 @@ class Message
     @settings = settings
   end
 
-  def send(message)
+  def send(message:, to:)
     account_sid = @settings.account_sid
     auth_token = @settings.auth_token
 
@@ -14,7 +14,7 @@ class Message
     if @settings.sms_enabled
       client.messages.create(
         messaging_service_sid: @settings.messaging_service_sid,
-        to: @settings.bcc_to,
+        to: to,
         body: message
       )
       puts "SMS Message: #{message} - sent"

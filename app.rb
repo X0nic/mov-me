@@ -15,7 +15,8 @@ post '/' do
 
   reply_message = Reply.new(settings).run("Downloading #{params[:Body]}")
 
-  Downloader.new(settings).run(params[:Body])
+  Downloader.new(settings: settings).run(url: params[:Body], to: params[:From])
+  # Downloader.new(settings).background_run(params[:Body])
 
   reply_message
 end
