@@ -24,6 +24,9 @@ class Downloader
 
     Message.new(@settings).send(message: s3_file.public_url, to: to)
 
+    safe_url = URI.escape(s3_file.public_url)
+    Message.new(@settings).send(message: "vlc-x-callback://x-callback-url/download?url=#{safe_url}", to: to)
+
     filename
   end
 
