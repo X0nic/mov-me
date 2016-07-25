@@ -3,7 +3,7 @@ require "./lib/command_runner"
 require "./lib/uploader"
 
 class Downloader
-  def initialize(settings: settings)
+  def initialize(settings:)
     @settings = settings
   end
 
