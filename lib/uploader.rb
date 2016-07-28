@@ -11,8 +11,8 @@ class Uploader
     # create a connection
     hash = {
       :provider                 => 'AWS',
-      :aws_access_key_id        => ENV['AWS_ACCESS_KEY_ID'],
-      :aws_secret_access_key    => ENV['AWS_SECRET_ACCESS_KEY']
+      :aws_access_key_id        => @settings.aws_access_key_id,
+      :aws_secret_access_key    => @settings.aws_secret_access_key
     }
 
     connection = Fog::Storage.new(hash)
