@@ -15,7 +15,6 @@ class Uploader
       :aws_secret_access_key    => ENV['AWS_SECRET_ACCESS_KEY']
     }
 
-    puts hash
     connection = Fog::Storage.new(hash)
 
     directory = connection.directories.get(@settings.s3_bucket)
