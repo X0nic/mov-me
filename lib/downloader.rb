@@ -11,7 +11,7 @@ class Downloader
     title = CommandRunner.new.exec_grab_output "youtube-dl --get-title #{url}"
     Message.new(@settings).send(message: "Found: #{title}", to: to)
 
-    CommandRunner.new.exec "youtube-dl --add-metadata #{url}"
+    CommandRunner.new.exec "youtube-dl --add-metadata -f 'bestvideo[height<=480]' #{url}"
     Message.new(@settings).send(message: "Downloaded #{url}", to: to)
 
     id = CommandRunner.new.exec_grab_output "youtube-dl --get-id #{url}"
