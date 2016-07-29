@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mov-me
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mov-me
+    spec:
+      containers:
+      - name: mov-me
+        image: ''
+        ports:
+        - containerPort: 9292
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mov-me
+  labels:
+    run: mov-me
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 9292
+      protocol: TCP
+  selector:
+    app: mov-me

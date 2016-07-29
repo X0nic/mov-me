@@ -12,6 +12,7 @@
 /config.yml
 .ruby-gemset
 .ruby-version
+/k8/mov-me.yaml
 
 # Used by dotenv library to load environment variables.
 # .env
