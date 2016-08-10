@@ -1,8 +1,13 @@
-sms_enabled: false
-account_sid: ''
-auth_token: ''
-messaging_service_sid: ''
-bcc_to: ''
-s3_bucket: 'bucket-man'
-aws_access_key_id: ''
-aws_secret_access_key: ''
+development: &defaults
+  sms_enabled: false
+  account_sid: ''
+  auth_token: ''
+  messaging_service_sid: ''
+  bcc_to: ''
+  s3_bucket: 'bucket-man'
+  aws_access_key_id: ''
+  aws_secret_access_key: ''
+  redis_host: ENV['REDIS_SERVICE_HOST']
+
+production:
+  <<: *defaults
