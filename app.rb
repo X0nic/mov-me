@@ -1,12 +1,14 @@
 #! /usr/bin/env ruby
 
-require "sinatra"
-require "sinatra/config_file"
-
-require './lib/downloader'
-require './lib/reply'
-
 config_file 'config.yml'
+
+get '/' do
+  'Mov Me'
+end
+
+get '/test' do
+  Reply.new(settings).run("hello")
+end
 
 post '/' do
   if settings.sms_enabled

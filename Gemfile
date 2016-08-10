@@ -1,9 +1,12 @@
 source 'https://rubygems.org'
+
+gem 'fog'
+gem 'foreman'
+gem 'mime-types'
+gem 'puma'
+gem 'sidekiq'
 gem 'sinatra'
 gem 'sinatra-contrib'
-gem 'puma'
 gem 'twilio-ruby'
-gem 'fog'
-gem 'mime-types'
 
 gem 'pry'
