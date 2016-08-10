@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+
+require './init'
+
+require "pry"
+Pry.start
