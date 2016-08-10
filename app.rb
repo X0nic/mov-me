@@ -1,6 +1,6 @@
 #! /usr/bin/env ruby
 
-config_file 'config.yml'
+config_file 'config.{yml,yml.erb}'
 
 get '/' do
   'Mov Me'
