@@ -20,7 +20,7 @@ class MovMe < Sinatra::Base
   end
 
   get '/test' do
-    json frontend: :OK
+    json frontend: :ok, backend: check_backend
   end
 
   post '/' do
@@ -36,5 +36,13 @@ class MovMe < Sinatra::Base
     # Downloader.new(settings).background_run(params[:Body])
 
     reply_message
+  end
+
+  private
+  def check_backend
+    NullWorker.perform_async(rand(30))
+    :ok
+  rescue
+    :fail
   end
 end
