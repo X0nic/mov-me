@@ -10,6 +10,7 @@
 /test/version_tmp/
 /tmp/
 /config.yml
+/config.yml.erb
 .ruby-gemset
 .ruby-version
 /k8/mov-me.yaml

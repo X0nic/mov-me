@@ -1,26 +1,40 @@
-#! /usr/bin/env ruby
+require 'sinatra/base'
+require 'sinatra/config_file'
+require 'sinatra/json'
 
-config_file 'config.{yml,yml.erb}'
+require 'sidekiq'
+require 'sidekiq/web'
 
-get '/' do
-  'Mov Me'
-end
+require './lib/downloader'
+require './lib/reply'
 
-get '/test' do
-  Reply.new(settings).run("hello")
-end
+require './workers/null_worker'
 
-post '/' do
-  if settings.sms_enabled
-    puts "SMS Incomming: #{params[:Body]} - received"
-  else
-    puts "SMS Incomming: #{params[:Body]}"
+class MovMe < Sinatra::Base
+  register Sinatra::ConfigFile
+
+  config_file 'config.{yml,yml.erb}'
+
+  get '/' do
+    'Mov Me'
   end
 
-  reply_message = Reply.new(settings).run("Downloading #{params[:Body]}")
+  get '/test' do
+    json frontend: :OK
+  end
 
-  Downloader.new(settings: settings).run(url: params[:Body], to: params[:From])
-  # Downloader.new(settings).background_run(params[:Body])
+  post '/' do
+    if settings.sms_enabled
+      puts "SMS Incomming: #{params[:Body]} - received"
+    else
+      puts "SMS Incomming: #{params[:Body]}"
+    end
 
-  reply_message
+    reply_message = Reply.new(settings).run("Downloading #{params[:Body]}")
+
+    Downloader.new(settings: settings).run(url: params[:Body], to: params[:From])
+    # Downloader.new(settings).background_run(params[:Body])
+
+    reply_message
+  end
 end
