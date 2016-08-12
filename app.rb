@@ -9,6 +9,7 @@ require './lib/reply'
 require './lib/settings'
 
 require './workers/null_worker'
+require './workers/download_worker'
 
 class MovMeApp < Sinatra::Base
 
@@ -29,7 +30,8 @@ class MovMeApp < Sinatra::Base
 
     reply_message = Reply.new.run("Downloading #{params[:Body]}")
 
-    Downloader.new.run(url: params[:Body], to: params[:From])
+    DownloadWorker.perform_async(params[:Body], params[:From])
+    # Downloader.new.run(url: params[:Body], to: params[:From])
     # Downloader.new(settings).background_run(params[:Body])
 
     reply_message
