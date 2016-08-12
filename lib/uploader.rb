@@ -1,23 +1,19 @@
 require 'fog'
 
 class Uploader
-  def initialize(settings)
-    @settings = settings
-  end
-
   def run(mov_file)
     puts "Uploading: #{mov_file}"
 
     # create a connection
     hash = {
       :provider                 => 'AWS',
-      :aws_access_key_id        => @settings.aws_access_key_id,
-      :aws_secret_access_key    => @settings.aws_secret_access_key
+      :aws_access_key_id        => Settings.aws_access_key_id,
+      :aws_secret_access_key    => Settings.aws_secret_access_key
     }
 
     connection = Fog::Storage.new(hash)
 
-    directory = connection.directories.get(@settings.s3_bucket)
+    directory = connection.directories.get(Settings.s3_bucket)
 
     # directory = connection.directories.create(
     #   :key    => @settings.s#_bucket, # globally unique name

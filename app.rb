@@ -1,5 +1,4 @@
 require 'sinatra/base'
-require 'sinatra/config_file'
 require 'sinatra/json'
 
 require 'sidekiq'
@@ -7,13 +6,11 @@ require 'sidekiq/web'
 
 require './lib/downloader'
 require './lib/reply'
+require './lib/settings'
 
 require './workers/null_worker'
 
-class MovMe < Sinatra::Base
-  register Sinatra::ConfigFile
-
-  config_file 'config.{yml,yml.erb}'
+class MovMeApp < Sinatra::Base
 
   get '/' do
     'Mov Me'
@@ -24,15 +21,15 @@ class MovMe < Sinatra::Base
   end
 
   post '/' do
-    if settings.sms_enabled
+    if Settings.sms_enabled?
       puts "SMS Incomming: #{params[:Body]} - received"
     else
       puts "SMS Incomming: #{params[:Body]}"
     end
 
-    reply_message = Reply.new(settings).run("Downloading #{params[:Body]}")
+    reply_message = Reply.new.run("Downloading #{params[:Body]}")
 
-    Downloader.new(settings: settings).run(url: params[:Body], to: params[:From])
+    Downloader.new.run(url: params[:Body], to: params[:From])
     # Downloader.new(settings).background_run(params[:Body])
 
     reply_message

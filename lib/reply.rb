@@ -1,12 +1,8 @@
 require 'twilio-ruby'
 
 class Reply
-  def initialize(settings)
-    @settings = settings
-  end
-
   def run(msg)
-    if @settings.sms_enabled
+    if Settings.sms_enabled?
       puts "SMS Reply: #{msg} - sent"
     else
       puts "SMS Reply: #{msg}"

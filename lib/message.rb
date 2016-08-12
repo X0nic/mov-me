@@ -1,25 +1,21 @@
 require 'twilio-ruby'
 
 class Message
-  def initialize(settings)
-    @settings = settings
-  end
-
   def send(message:, to:)
-    account_sid = @settings.account_sid
-    auth_token = @settings.auth_token
+    account_sid = Settings.account_sid
+    auth_token = Settings.auth_token
 
     client = Twilio::REST::Client.new account_sid, auth_token
 
-    if @settings.sms_enabled
+    if Settings.sms_enabled?
       client.messages.create(
-        messaging_service_sid: @settings.messaging_service_sid,
+        messaging_service_sid: Settings.messaging_service_sid,
         to: to,
         body: message
       )
-      puts "SMS Message: #{message} - sent"
+      puts "SMS Message: #{to} #{message} - sent"
     else
-      puts "SMS Message: #{message}"
+      puts "SMS Message: #{to} #{message}"
     end
   end
 end
