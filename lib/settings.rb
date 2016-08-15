@@ -33,6 +33,10 @@ class Settings
     config[:redis_host]
   end
 
+  def self.loaded?
+    !!config
+  end
+
   private
 
   def self.config
@@ -40,7 +44,7 @@ class Settings
   end
 
   def self.load_config
-    file = 'config.yml'
+    file = File.exists?("config.local.yml") ? "config.local.yml" : "config.yml"
 
     document = ERB.new(IO.read(file)).result
     yaml = YAML.load(document) || {}

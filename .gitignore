@@ -11,6 +11,7 @@
 /tmp/
 /config.yml
 /config.yml.erb
+/config.local.yml
 .ruby-gemset
 .ruby-version
 /k8/mov-me.yaml

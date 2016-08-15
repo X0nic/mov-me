@@ -18,7 +18,7 @@ class MovMeApp < Sinatra::Base
   end
 
   get '/test' do
-    json frontend: :ok, backend: check_backend
+    json frontend: :ok, backend: check_backend, config: check_config
   end
 
   post '/' do
@@ -41,6 +41,12 @@ class MovMeApp < Sinatra::Base
   def check_backend
     NullWorker.perform_async(rand(30))
     :ok
+  rescue
+    :fail
+  end
+
+  def check_config
+    Settings.loaded? ? :ok : :fail
   rescue
     :fail
   end

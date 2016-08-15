@@ -1,5 +1,7 @@
 FROM ruby:2.1-onbuild
 
+RUN rm config.local.yml
+
 RUN apt-get update \
       && apt-get install -y --no-install-recommends \
          libav-tools \
