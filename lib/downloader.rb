@@ -7,10 +7,16 @@ class Downloader
     title = CommandRunner.new.exec_grab_output "youtube-dl --get-title #{url}"
     Message.new.send(message: "Found: #{title}", to: to)
 
+    id = CommandRunner.new.exec_grab_output "youtube-dl --get-id #{url}"
+
+    FileUtils.mkdir_p("/tmp/#{id}")
+    Dir.chdir("/tmp/#{id}")
+
+    puts Dir.pwd
+
     CommandRunner.new.exec "youtube-dl --add-metadata #{url}"
     Message.new.send(message: "Downloaded #{url}", to: to)
 
-    id = CommandRunner.new.exec_grab_output "youtube-dl --get-id #{url}"
     filename = Dir.glob("*#{id}*").first
     Message.new.send(message: "Saved to: #{filename}", to: to)
 
@@ -24,12 +30,6 @@ class Downloader
     Message.new.send(message: "vlc-x-callback://x-callback-url/download?url=#{safe_url}", to: to)
 
     filename
-  end
-
-  def background_run(url)
-    Thread.new do
-      run(url)
-    end
   end
 
 end
