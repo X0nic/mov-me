@@ -6,6 +6,7 @@ require 'sidekiq/web'
 
 require './lib/downloader'
 require './lib/reply'
+require './lib/feed_builder'
 require './lib/settings'
 
 require './workers/null_worker'
