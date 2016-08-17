@@ -1,10 +1,9 @@
 require 'fog'
 
 class Uploader
-  def run(mov_file)
-    puts "Uploading: #{mov_file}"
+  def run(file_to_upload)
+    puts "Uploading: #{file_to_upload}"
 
-    # create a connection
     hash = {
       :provider                 => 'AWS',
       :aws_access_key_id        => Settings.aws_access_key_id,
@@ -15,24 +14,12 @@ class Uploader
 
     directory = connection.directories.get(Settings.s3_bucket)
 
-    # directory = connection.directories.create(
-    #   :key    => @settings.s#_bucket, # globally unique name
-    #   :public => true
-    # )
-
-    # list directories
-    p connection.directories
-
-    # upload that resume
     file = directory.files.create(
-      :key    => mov_file,
-      :body   => File.open(mov_file),
+      :key    => file_to_upload,
+      :body   => File.open(file_to_upload),
       :public => true
     )
 
-    p file
     file
-  rescue ex
-    puts ex
   end
 end

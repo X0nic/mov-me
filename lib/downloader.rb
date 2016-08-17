@@ -9,27 +9,35 @@ class Downloader
 
     id = CommandRunner.new.exec_grab_output "youtube-dl --get-id #{url}"
 
-    FileUtils.mkdir_p("/tmp/#{id}")
-    Dir.chdir("/tmp/#{id}")
+    save_location = "/tmp/#{id}"
+    FileUtils.mkdir_p(save_location)
+    Dir.chdir(save_location)
 
-    puts Dir.pwd
-
-    CommandRunner.new.exec "youtube-dl --add-metadata #{url}"
+    CommandRunner.new.exec "youtube-dl --write-info-json --add-metadata #{url}"
     Message.new.send(message: "Downloaded #{url}", to: to)
 
-    filename = Dir.glob("*#{id}*").first
-    Message.new.send(message: "Saved to: #{filename}", to: to)
+    Message.new.send(message: "Saved to: #{movie_filename}", to: to)
 
-    s3_file = Uploader.new.run(filename)
+    s3_file = Uploader.new.run(movie_filename)
 
-    Message.new.send(message: "Uploaded #{filename}", to: to)
+    Message.new.send(message: "Uploaded #{movie_filename}", to: to)
 
     Message.new.send(message: s3_file.public_url, to: to)
+
+    Uploader.new.run(json_filename)
 
     safe_url = URI.escape(s3_file.public_url)
     Message.new.send(message: "vlc-x-callback://x-callback-url/download?url=#{safe_url}", to: to)
 
-    filename
+    movie_filename
+  end
+
+  def movie_filename
+    Dir["*"].find{ |file| File.extname(file) != ".json" }
+  end
+
+  def json_filename
+    Dir["*.json"].first
   end
 
 end
