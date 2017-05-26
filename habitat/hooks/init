@@ -1,8 +1,0 @@
-#!/bin/sh
-export APP_HOME="{{pkg.path}}"
-export APP_DATA="{{pkg.svc_data_path}}"
-
-# echo "Deploying new version from ${APP_HOME} to ${APP_DATA}"
-# cp -a ${APP_HOME}/dist ${APP_DATA}/dist
-#
-# chown -R hab:hab ${RAILS_SAMPLE_DATA}/dist
