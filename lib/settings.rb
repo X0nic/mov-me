@@ -44,9 +44,10 @@ class Settings
   end
 
   def self.load_config
-    file = File.exists?("config.local.yml") ? "config.local.yml" : "config.yml"
+    file_name = File.exists?("config.local.yml") ? "config.local.yml" : "config.yml"
+    file_path = File.join('config', file_name)
 
-    document = ERB.new(IO.read(file)).result
+    document = ERB.new(IO.read(file_path)).result
     yaml = YAML.load(document) || {}
     yaml.symbolize_keys
   end

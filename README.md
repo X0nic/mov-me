@@ -15,7 +15,7 @@ With VLC on your phone, the video can be downloaded for offline viewing.
 
 1. Install ruby
 1. run `bundle install`
-1. Create your own config `cp config.yml.example config.yml`
+1. Create your own config `cp config/config.yml.example config/config.yml`
 1. Enter your s3 and twilio settings into config. (More instructions to come later)
 1. run `rackup`
 
