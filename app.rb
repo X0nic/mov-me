@@ -42,7 +42,8 @@ class MovMeApp < Sinatra::Base
   def check_backend
     NullWorker.perform_async(rand(30))
     :ok
-  rescue
+  rescue => e
+    puts e
     :fail
   end
 
