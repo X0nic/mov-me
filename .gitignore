@@ -15,6 +15,7 @@
 .ruby-gemset
 .ruby-version
 /k8/mov-me.yaml
+/results
 
 # Used by dotenv library to load environment variables.
 # .env
