@@ -7,6 +7,8 @@ development: &defaults
   s3_bucket: 'bucket-man'
   aws_access_key_id: ''
   aws_secret_access_key: ''
+  sidekiq_username: 'admin'
+  sidekiq_password: 'admin'
   redis_host: ENV['REDIS_SERVICE_HOST']
 
 production:
