@@ -37,6 +37,10 @@ class Settings
     !!config
   end
 
+  def self.environment
+    ENV['RACK_ENV'] || 'development'
+  end
+
   private
 
   def self.config
@@ -48,7 +52,7 @@ class Settings
     file_path = File.join('config', file_name)
 
     document = ERB.new(IO.read(file_path)).result
-    yaml = YAML.load(document) || {}
+    yaml = (YAML.load(document) || {})[environment]
     yaml.symbolize_keys
   end
 

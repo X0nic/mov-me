@@ -19,7 +19,7 @@ class MovMeApp < Sinatra::Base
   end
 
   get '/test' do
-    json frontend: :ok, backend: check_backend, config: check_config
+    json frontend: :ok, backend: check_backend, config: check_config, environment: environment
   end
 
   post '/' do
@@ -49,6 +49,12 @@ class MovMeApp < Sinatra::Base
 
   def check_config
     Settings.loaded? ? :ok : :fail
+  rescue
+    :fail
+  end
+
+  def environment
+    Settings.environment
   rescue
     :fail
   end
