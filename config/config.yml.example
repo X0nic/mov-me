@@ -9,7 +9,9 @@ development: &defaults
   aws_secret_access_key: ''
   sidekiq_username: 'admin'
   sidekiq_password: 'admin'
-  redis_host: ENV['REDIS_SERVICE_HOST']
+  redis_host: <%= `docker-machine ip default` %>
 
 production:
   <<: *defaults
+  sms_enabled: true
+  redis_host: ENV['REDIS_SERVICE_HOST']
